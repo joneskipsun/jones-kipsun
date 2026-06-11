@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jones Kipsun P — Mechanical Design Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:    #0D1B2A;
+    --steel:   #1B3A5C;
+    --accent:  #2E8BC0;
+    --bright:  #4FC3F7;
+    --silver:  #B0BEC5;
+    --light:   #E8F4FD;
+    --white:   #FFFFFF;
+    --bg:      #07111C;
+    --card:    #0F2033;
+    --border:  #1A3650;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(7,17,28,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--bright);
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--silver); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--bright); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 80px 5% 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(46,139,192,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(79,195,247,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Blueprint grid overlay */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(46,139,192,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,139,192,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(46,139,192,0.12);
+    border: 1px solid rgba(79,195,247,0.3);
+    border-radius: 2px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--bright);
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--bright);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  h1 .first { color: var(--white); }
+  h1 .last { color: var(--bright); }
+
+  .hero-title {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--silver);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.01em;
+  }
+  .hero-title span {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .tag {
+    background: rgba(27,58,92,0.6);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--silver);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    padding: 0.75rem 1.8rem;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 600; font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .btn-primary:hover { background: var(--bright); transform: translateY(-1px); }
+  .btn-secondary {
+    border: 1px solid var(--border);
+    color: var(--silver);
+    padding: 0.75rem 1.8rem;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 500; font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--white); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+  }
+  .stat { }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--bright); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem; color: var(--silver);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 5%; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+  }
+  h2 em { color: var(--bright); font-style: normal; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--silver);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+  .about-text p strong { color: var(--white); }
+  .about-details { display: flex; flex-direction: column; gap: 1rem; }
+  .detail-row {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 0.8rem 1rem;
+    background: rgba(7,17,28,0.6);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .detail-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .detail-key { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; margin-bottom: 0.15rem; }
+  .detail-val { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+
+  /* ── SKILLS ── */
+  #skills { }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .skill-card-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+  .skill-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--bright);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+  }
+  .skill-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .skill-pill {
+    background: rgba(46,139,192,0.1);
+    border: 1px solid rgba(46,139,192,0.25);
+    border-radius: 2px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem; color: var(--silver);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 11px; top: 8px; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    position: absolute; left: 0; top: 6px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .timeline-dot.active { background: var(--accent); border-color: var(--bright); }
+  .timeline-dot.active::after {
+    content: '';
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--white);
+  }
+  .exp-card {
+    background: rgba(7,17,28,0.6);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: var(--accent); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .exp-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--white);
+  }
+  .exp-badge {
+    background: rgba(46,139,192,0.15);
+    border: 1px solid rgba(46,139,192,0.3);
+    border-radius: 2px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--bright);
+    letter-spacing: 0.06em;
+  }
+  .exp-company { font-size: 0.9rem; color: var(--accent); font-weight: 500; margin-bottom: 0.3rem; }
+  .exp-meta { font-size: 0.78rem; color: var(--silver); margin-bottom: 1rem; }
+  .exp-context {
+    font-size: 0.8rem; color: var(--silver);
+    font-style: italic; margin-bottom: 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--border);
+  }
+  .exp-points { list-style: none; }
+  .exp-points li {
+    font-size: 0.88rem; color: var(--silver);
+    padding: 0.3rem 0 0.3rem 1.2rem;
+    position: relative; line-height: 1.6;
+  }
+  .exp-points li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 0.75rem;
+    top: 0.35rem;
+  }
+  .exp-skills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+
+  /* ── PROJECTS ── */
+  #projects { }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-img {
+    height: 180px;
+    background: linear-gradient(135deg, var(--steel) 0%, var(--navy) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    position: relative; overflow: hidden;
+  }
+  .project-img::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(79,195,247,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,195,247,0.06) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .project-img-placeholder {
+    position: relative; z-index: 1;
+    text-align: center;
+  }
+  .project-img-placeholder p {
+    font-size: 0.72rem; color: var(--silver);
+    margin-top: 0.5rem; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .project-body { padding: 1.2rem; }
+  .project-body h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.4rem;
+  }
+  .project-body p { font-size: 0.85rem; color: var(--silver); line-height: 1.6; margin-bottom: 0.8rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--card); border-top: 1px solid var(--border); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start;
+  }
+  .contact-text p { color: var(--silver); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: rgba(7,17,28,0.6);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); }
+  .contact-link-icon { font-size: 1.2rem; width: 2rem; text-align: center; }
+  .contact-link-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; }
+  .contact-link-val { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 5%;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.8rem; color: var(--silver); }
+  .footer-name { font-family: 'Space Grotesk', sans-serif; color: var(--bright); font-weight: 600; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { gap: 1.5rem; }
+    section { padding: 60px 5%; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">JK<span style="color:var(--silver);font-weight:400;">·P</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Available for GCC Opportunities</div>
+    <h1>
+      <span class="first">Jones Kipsun</span><br/>
+      <span class="last">P</span>
+    </h1>
+    <p class="hero-title">
+      <span>Mechanical Design Engineer</span> — UAE &amp; India
+    </p>
+    <div class="hero-tags">
+      <span class="tag">SolidWorks</span>
+      <span class="tag">CAD/CAM</span>
+      <span class="tag">Aluminium Fabrication</span>
+      <span class="tag">Sheet Metal Design</span>
+      <span class="tag">Tooling &amp; Fixtures</span>
+      <span class="tag">EN 131 · BS 1004</span>
+      <span class="tag">GD&amp;T · DFM</span>
+      <span class="tag">Lantek Nesting</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">↓ Get In Touch</a>
+      <a href="#experience" class="btn-secondary">View Experience</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Companies</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Industry Sectors</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">UAE</div>
+        <div class="stat-label">Current Location</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">Who I Am</p>
+    <h2>Precision Engineering, <em>Built to Last</em></h2>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm a <strong>Mechanical Design Engineer</strong> with 5+ years of hands-on experience across ISO-certified manufacturing environments in the <strong>UAE and India</strong>. I specialize in SolidWorks CAD/CAM design, aluminium fabrication, sheet metal engineering, and tooling &amp; fixture development.</p>
+      <p>Currently at <strong>Al Jarsh Metal Sections Mfg. Co. LLC</strong> in Umm al-Quwain, UAE, I design aluminium ladders, scaffolding, and custom access solutions — ensuring compliance with <strong>EN 131 and BS 1004</strong> international safety standards.</p>
+      <p>My background spans heavy steel plate processing for <strong>construction equipment and shipbuilding OEMs</strong> in India, and precision R&amp;D design for <strong>globally exported textile testing systems</strong>. I bring SAP and Oracle ERP experience that most design engineers don't have.</p>
+    </div>
+    <div class="about-details">
+      <div class="detail-row">
+        <div class="detail-icon">📍</div>
+        <div>
+          <div class="detail-key">Location</div>
+          <div class="detail-val">Umm al-Quwain, UAE · Open to GCC Relocation</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">🎓</div>
+        <div>
+          <div class="detail-key">Education</div>
+          <div class="detail-val">B.E. Mechanical Engineering · RVS College, Coimbatore · 79%</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">📜</div>
+        <div>
+          <div class="detail-key">Certification</div>
+          <div class="detail-val">Product Design (CAD/CAM) · CADD Centre, Coimbatore</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">🌐</div>
+        <div>
+          <div class="detail-key">Languages</div>
+          <div class="detail-val">English (Fluent) · Tamil (Native)</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">⚙️</div>
+        <div>
+          <div class="detail-key">Standards</div>
+          <div class="detail-val">ISO 9001 · ISO 14001 · EN 131 · BS 1004 · GD&amp;T ASME Y14.5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">Technical Expertise</p>
+    <h2>Tools &amp; <em>Capabilities</em></h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <div class="skill-card-icon">🖥️</div>
+      <h3>CAD / CAM Software</h3>
+      <div class="skill-list">
+        <span class="skill-pill">SolidWorks</span>
+        <span class="skill-pill">AutoCAD 2D/3D</span>
+        <span class="skill-pill">Creo (PTC)</span>
+        <span class="skill-pill">Lantek Expert</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🏭</div>
+      <h3>Production &amp; Fabrication</h3>
+      <div class="skill-list">
+        <span class="skill-pill">Laser Cutting</span>
+        <span class="skill-pill">CNC Plasma</span>
+        <span class="skill-pill">Oxy-Gas Cutting</span>
+        <span class="skill-pill">CNC Bending</span>
+        <span class="skill-pill">Aluminium Fabrication</span>
+        <span class="skill-pill">Sheet Metal Forming</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">📐</div>
+      <h3>Engineering Skills</h3>
+      <div class="skill-list">
+        <span class="skill-pill">GD&amp;T</span>
+        <span class="skill-pill">DFM</span>
+        <span class="skill-pill">Tolerance Analysis</span>
+        <span class="skill-pill">Reverse Engineering</span>
+        <span class="skill-pill">Fixture Design</span>
+        <span class="skill-pill">Jig Design</span>
+        <span class="skill-pill">BOM Management</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">💾</div>
+      <h3>Systems &amp; ERP</h3>
+      <div class="skill-list">
+        <span class="skill-pill">SAP ERP</span>
+        <span class="skill-pill">Oracle ERP</span>
+        <span class="skill-pill">ECN/ECO Management</span>
+        <span class="skill-pill">MS Office</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🔒</div>
+      <h3>Standards &amp; Compliance</h3>
+      <div class="skill-list">
+        <span class="skill-pill">EN 131</span>
+        <span class="skill-pill">BS 1004</span>
+        <span class="skill-pill">ISO 9001:2015</span>
+        <span class="skill-pill">ISO 14001</span>
+        <span class="skill-pill">CE Certification</span>
+        <span class="skill-pill">ASME Y14.5</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🔧</div>
+      <h3>Design Processes</h3>
+      <div class="skill-list">
+        <span class="skill-pill">New Product Development</span>
+        <span class="skill-pill">Prototype Validation</span>
+        <span class="skill-pill">Technical Drawings</span>
+        <span class="skill-pill">Shop Floor Drawings</span>
+        <span class="skill-pill">Parametric Assembly</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="reveal">
+    <p class="section-label">Career Journey</p>
+    <h2>Professional <em>Experience</em></h2>
+  </div>
+  <div class="timeline reveal">
+
+    <!-- Al Jarsh -->
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Junior Design Engineer</div>
+          <div class="exp-badge">Current · UAE</div>
+        </div>
+        <div class="exp-company">Al Jarsh Metal Sections Manufacturing Co. LLC</div>
+        <div class="exp-meta">📅 May 2026 – Present &nbsp;|&nbsp; 📍 Umm al-Quwain, United Arab Emirates</div>
+        <div class="exp-context">ISO 9001:2015 certified UAE manufacturer of aluminium ladders, scaffolding &amp; access solutions (Penguin® brand) · Est. 2004 · Middle East market leader</div>
+        <ul class="exp-points">
+          <li>Design aluminium ladders, scaffolding towers, and custom access solutions using SolidWorks parametric modelling and assembly design.</li>
+          <li>Ensure all product designs comply with international safety standards EN 131 (Ladders) and BS 1004 (Industrial Staging), supporting product certification.</li>
+          <li>Produce detailed technical drawings, shop floor drawings, and fabrication documents for aluminium structural component manufacturing.</li>
+          <li>Create and maintain accurate multi-level BOMs to support procurement, production planning, and assembly processes.</li>
+        </ul>
+        <div class="exp-skills">
+          <span class="tag">SolidWorks</span><span class="tag">EN 131</span><span class="tag">BS 1004</span><span class="tag">Aluminium Fabrication</span><span class="tag">BOM Management</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMOP -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Junior Engineer – CAD/CAM</div>
+          <div class="exp-badge">2 Yrs · India</div>
+        </div>
+        <div class="exp-company">India Metal One Steel Plate Processing Pvt. Ltd. (IMOP)</div>
+        <div class="exp-meta">📅 March 2024 – March 2026 &nbsp;|&nbsp; 📍 Sri City, Tada, Andhra Pradesh</div>
+        <div class="exp-context">ISO 9001 &amp; ISO 14001 certified Japanese JV · 24,000+ MT annual capacity · Sectors: Construction Equipment, Transport &amp; Shipbuilding OEMs</div>
+        <ul class="exp-points">
+          <li>Programmed and optimized laser, plasma, and oxy-gas cutting profiles in Lantek for heavy steel plate components using advanced nesting strategies.</li>
+          <li>Designed and commissioned production fixtures and jigs for heavy fabrication assemblies, improving dimensional accuracy and reducing rework.</li>
+          <li>Developed high-tolerance 3D CAD models and 2D manufacturing drawings in SolidWorks and AutoCAD for construction equipment and shipbuilding OEMs.</li>
+          <li>Created and managed multi-level BOMs and material master records in SAP ERP, streamlining procurement workflows.</li>
+          <li>Implemented stricter QC drawing review protocols, reducing drawing-related production errors.</li>
+        </ul>
+        <div class="exp-skills">
+          <span class="tag">Lantek</span><span class="tag">SolidWorks</span><span class="tag">AutoCAD</span><span class="tag">SAP ERP</span><span class="tag">Fixture Design</span><span class="tag">GD&amp;T</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Premier Evolvics -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Mechanical Design Engineer – R&amp;D</div>
+          <div class="exp-badge">1 Yr · India</div>
+        </div>
+        <div class="exp-company">Premier Evolvics Pvt. Ltd.</div>
+        <div class="exp-meta">📅 January 2023 – March 2024 &nbsp;|&nbsp; 📍 Coimbatore, Tamil Nadu</div>
+        <div class="exp-context">ISO 9001 &amp; CE-certified global manufacturer of textile testing &amp; contamination sorting systems · Part of Premier Mills Group · Exports to 40+ countries</div>
+        <ul class="exp-points">
+          <li>Designed mechanical enclosures, precision fixtures, and custom tooling for cotton contamination sorter systems in SolidWorks.</li>
+          <li>Produced high-accuracy 3D models and manufacturing drawings adhering to GD&amp;T and DFM standards, supporting CE certification for export markets.</li>
+          <li>Collaborated with multi-disciplinary R&amp;D teams to validate prototypes, accelerating design iteration cycles.</li>
+          <li>Maintained ECN/ECO documentation in Oracle ERP, ensuring full design traceability.</li>
+        </ul>
+        <div class="exp-skills">
+          <span class="tag">SolidWorks</span><span class="tag">GD&amp;T</span><span class="tag">DFM</span><span class="tag">Oracle ERP</span><span class="tag">CE Compliance</span><span class="tag">Prototyping</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Robo Met -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Junior Design Engineer</div>
+          <div class="exp-badge">1.5 Yrs · India</div>
+        </div>
+        <div class="exp-company">Robo Met Fabs</div>
+        <div class="exp-meta">📅 August 2021 – December 2022 &nbsp;|&nbsp; 📍 Coimbatore, Tamil Nadu</div>
+        <div class="exp-context">MSME sheet metal &amp; heavy fabrication company · Laser cutting, CNC plasma, CNC bending · Automotive &amp; industrial machinery sectors</div>
+        <ul class="exp-points">
+          <li>Created optimized nesting programs for laser, plasma, and oxy-gas cutting machines, maximizing material utilization.</li>
+          <li>Led end-to-end new product development projects from customer concept through production-ready designs.</li>
+          <li>Designed welding fixtures and jigs for large structural fabrications, improving production consistency.</li>
+          <li>Conducted reverse engineering of discontinued components, reducing spare part procurement costs.</li>
+        </ul>
+        <div class="exp-skills">
+          <span class="tag">SolidWorks</span><span class="tag">AutoCAD</span><span class="tag">CNC Nesting</span><span class="tag">Welding Fixtures</span><span class="tag">Reverse Engineering</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">Portfolio</p>
+    <h2>Design <em>Projects</em></h2>
+  </div>
+  <div class="projects-grid reveal">
+
+    <div class="project-card">
+      <div class="project-img">
+        <div class="project-img-placeholder">
+          <div>🪜</div>
+          <p>Add CAD Screenshot</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Aluminium Ladder Design — EN 131 Compliant</h3>
+        <p>Custom aluminium ladder designed to EN 131 international safety standards. SolidWorks parametric model with full assembly and manufacturing drawings.</p>
+        <div class="project-tags">
+          <span class="tag">SolidWorks</span><span class="tag">EN 131</span><span class="tag">Aluminium</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <div class="project-img-placeholder">
+          <div>🏗️</div>
+          <p>Add CAD Screenshot</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Scaffolding &amp; Access Solutions</h3>
+        <p>Mobile scaffolding tower design with compliance to BS 1004 staging standards. Custom access solutions for industrial and construction applications.</p>
+        <div class="project-tags">
+          <span class="tag">SolidWorks</span><span class="tag">BS 1004</span><span class="tag">Fabrication</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <div class="project-img-placeholder">
+          <div>⚙️</div>
+          <p>Add CAD Screenshot</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Heavy Steel Plate Nesting &amp; Fixtures</h3>
+        <p>Lantek nesting programs and production fixture designs for heavy steel plate components supplied to construction equipment and shipbuilding OEMs.</p>
+        <div class="project-tags">
+          <span class="tag">Lantek</span><span class="tag">Fixture Design</span><span class="tag">Steel Fabrication</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <div class="project-img-placeholder">
+          <div>🔬</div>
+          <p>Add CAD Screenshot</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Textile Testing Equipment — Precision Fixtures</h3>
+        <p>Mechanical enclosures and precision fixtures for cotton contamination sorter systems. GD&amp;T compliant, CE certified, designed for global export markets.</p>
+        <div class="project-tags">
+          <span class="tag">SolidWorks</span><span class="tag">GD&amp;T</span><span class="tag">CE Certified</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:2rem; padding:1.5rem; border:1px dashed var(--border); border-radius:2px; text-align:center; color:var(--silver); font-size:0.88rem;" class="reveal">
+    💡 <strong style="color:var(--white);">To add your own projects:</strong> Replace the emoji icons with your SolidWorks screenshots, update the titles and descriptions. More projects coming soon.
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">Let's Connect</p>
+    <h2>Open to <em>Opportunities</em></h2>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-text">
+      <p>I'm actively looking for <strong>Mechanical Design Engineer, CAD Engineer, and Manufacturing Engineer</strong> roles across the GCC — particularly in the UAE, Saudi Arabia, and Qatar.</p>
+      <p>With hands-on experience in aluminium fabrication, heavy steel processing, and precision R&amp;D design, I bring a rare combination of CAD expertise and real shop floor understanding to every role.</p>
+      <p>Feel free to reach out via email or connect on LinkedIn.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:joneskipsun@gmail.com" class="contact-link">
+        <div class="contact-link-icon">✉️</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-val">joneskipsun@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+919578767897" class="contact-link">
+        <div class="contact-link-icon">📱</div>
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-val">+91 95787 67897</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/jones-kipsun" target="_blank" class="contact-link">
+        <div class="contact-link-icon">🔗</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">linkedin.com/in/jones-kipsun</div>
+        </div>
+      </a>
+      <div class="contact-link">
+        <div class="contact-link-icon">📍</div>
+        <div>
+          <div class="contact-link-label">Location</div>
+          <div class="contact-link-val">Umm al-Quwain, UAE · Open to GCC Relocation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span class="footer-name">Jones Kipsun P</span> · Mechanical Design Engineer</p>
+  <p style="font-size:0.75rem;">SolidWorks · AutoCAD · Creo · Lantek · SAP · Oracle ERP</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger child cards
+  document.querySelectorAll('.skills-grid, .projects-grid').forEach(grid => {
+    grid.querySelectorAll('.skill-card, .project-card').forEach((card, i) => {
+      card.style.transitionDelay = (i * 0.07) + 's';
+    });
+  });
+</script>
+</body>
+</html>
